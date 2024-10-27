@@ -32,7 +32,7 @@ function App() {
 
   return (
     <div className="app">
-      <p>Currently supported platforms: RIDE, Burton, Smith, Halfdays</p>
+      <p>Supported platforms: RIDE, Burton, Smith, Halfdays</p>
       <AddItem></AddItem>
       {items && items.length > 0 && <div>{items.map((item) => {
         return <Item key={item.itemId} item={item}></Item>

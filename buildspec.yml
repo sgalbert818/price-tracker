@@ -12,3 +12,5 @@ artifacts:
   baseDirectory: frontend/dist  # This should match the output directory of your build
   files:
     - '**/*'  # Include all files in the output directory
+
+
