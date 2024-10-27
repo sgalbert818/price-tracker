@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 14px;
+}
+
+.app {
+    padding: 20px;
+}
+
+#url {
+    width: 500px;
+    margin: 15px 0 15px 10px;
+}
+
+.add-item-btn {
+    margin-bottom: 15px;
+}
+
+.submit {
+    display: flex;
+    align-items: center;
+}
+
+.submit button {
+    margin-right: 15px;
+}
+
+.item {
+    background-color: rgb(241, 241, 241);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    padding: 13px 15px 10px 15px;
+    margin-top: 15px;
+}
+
+.item-desc {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.item-desc-title {
+    margin-right: 20px;
+}
+
+.item-desc-price {
+    margin-right: 20px;
+}
+
+#link-btn, #del-btn {
+    border: none;
+    background-color: transparent;
+    color: black;
+}
+
+#link-btn a {
+    text-decoration: none;
+    color: black;
+}
+
+#del-btn {
+    margin-left: auto;
+}
+
+.h1 {
+    width: 90px;
+    flex-shrink: 0;
+    margin-right: 15px;
+    object-fit: contain;
+    border-radius: 5px;
+}
+
+.h1 img {
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.h2 {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.chart-container {
+    height: 100px;
+}
+
+button:hover {
+    cursor: pointer;
+}
