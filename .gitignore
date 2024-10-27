@@ -1,2 +1,4 @@
 pt.pem
 *.pem
+/frontend/dist
+/backend/pt.pem
