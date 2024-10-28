@@ -40,8 +40,8 @@ cd your-repo
 ```
 
 Set up the frontend:
-cd frontend
 ```bash
+cd frontend
 npm install
 npm start
 ```
