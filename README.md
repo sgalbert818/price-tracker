@@ -1,6 +1,6 @@
 # Price-Tracker: Serverless Web Scraper
 
-https://main.dsrqd59wkn2z0.amplifyapp.com/
+Live demo: https://main.dsrqd59wkn2z0.amplifyapp.com/
 
 # Overview
 
