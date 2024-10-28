@@ -22,138 +22,57 @@ def get_info(url):
 
     try:
         driver.get(url)
-        platform_key = url[13]
-        timeout = 10
+        platform_key = url[13].lower()
+        timeout = 5  # Reduced timeout for faster response
 
-        # Initialize variables
-        name, price, img = None, None, None
+        info = {}
+
+        # Helper function to handle element fetching with error checks
+        def fetch_element(by, value, description):
+            try:
+                return WebDriverWait(driver, timeout).until(EC.presence_of_element_located((by, value)))
+            except (NoSuchElementException, TimeoutException):
+                raise RuntimeError(f"{description.capitalize()} element not found. Ensure platform is supported and URL points to a single item.")
         
-        if platform_key.lower() == 'n':  # RIDE
-            try:
-                name_element = WebDriverWait(driver, timeout).until(
-                    EC.presence_of_element_located((By.XPATH, "//h1[@class='notranslate']"))
-                )
-                name = name_element.text
-            except (NoSuchElementException, TimeoutException):
-                name = None  # Element not found
+        # Platform-specific scraping
+        if platform_key == 'n':  # RIDE
+            info['name'] = fetch_element(By.XPATH, "//h1[@class='notranslate']", "Name").text
+            info['price'] = fetch_element(By.CLASS_NAME, 'normal-price', "Price").text.replace(',', '').replace('$', '')
+            info['img'] = fetch_element(By.XPATH, "//img[@alt='1']", "Image").get_attribute('src')
 
-            try:
-                price_element = WebDriverWait(driver, timeout).until(
-                    EC.presence_of_element_located((By.CLASS_NAME, 'normal-price'))
-                )
-                price = price_element.text.replace(',', '').replace('$', '')
-            except (NoSuchElementException, TimeoutException):
-                price = None  # Element not found
+        elif platform_key == 'u':  # BURTON
+            info['name'] = fetch_element(By.XPATH, "//h1[@class='product-name text-h2-display']", "Name").text
+            info['price'] = fetch_element(By.CLASS_NAME, 'standard-price', "Price").text.replace(',', '').replace('$', '')
+            img_div = fetch_element(By.XPATH, "//div[@class='gallery-item']", "Image container")
+            info['img'] = img_div.find_element(By.TAG_NAME, 'img').get_attribute('src')
 
-            try:
-                img_element = WebDriverWait(driver, timeout).until(
-                    EC.presence_of_element_located((By.XPATH, "//img[@alt='1']"))
-                )
-                img = img_element.get_attribute('src')
-            except (NoSuchElementException, TimeoutException):
-                img = None  # Element not found
+        elif platform_key == 'm':  # SMITH
+            info['name'] = 'SMITH ' + fetch_element(By.XPATH, "//h1[@class='product-name']", "Name").text
+            info['price'] = fetch_element(By.XPATH, "//span[@class='js-list-price']", "Price").text.replace(',', '').replace('$', '')
+            img_div = fetch_element(By.XPATH, "//div[@class='prod-img']", "Image container")
+            info['img'] = img_div.find_element(By.TAG_NAME, 'img').get_attribute('src')
 
-        elif platform_key.lower() == 'u':  # BURTON
-            try:
-                name_element = WebDriverWait(driver, timeout).until(
-                    EC.presence_of_element_located((By.XPATH, "//h1[@class='product-name text-h2-display']"))
-                )
-                name = name_element.text.replace("\u00ae", "")
-            except (NoSuchElementException, TimeoutException):
-                name = None
+        elif platform_key == 'a':  # HALFDAYS
+            info['name'] = 'Halfdays ' + fetch_element(By.XPATH, "//h1[@role='heading']", "Name").text
+            info['price'] = fetch_element(By.CSS_SELECTOR, "span.price-item.price-item--regular", "Price").get_attribute('innerHTML').strip().replace(',', '').replace('$', '')
+            info['img'] = fetch_element(By.XPATH, "//img[@class='photoswipe__image']", "Image").get_attribute('src')
 
-            try:
-                price_element = WebDriverWait(driver, timeout).until(
-                    EC.presence_of_element_located((By.CLASS_NAME, 'standard-price'))
-                )
-                price = price_element.text.replace(',', '').replace('$', '')
-            except (NoSuchElementException, TimeoutException):
-                price = None
-
-            try:
-                img_div = WebDriverWait(driver, timeout).until(
-                    EC.presence_of_element_located((By.XPATH, "//div[@class='gallery-item']"))
-                )
-                if img_div:
-                    img_element = img_div.find_element(By.TAG_NAME, 'img')
-                    img = img_element.get_attribute('src')
-            except (NoSuchElementException, TimeoutException):
-                img = None
-
-        elif platform_key.lower() == 'm':  # SMITH
-            try:
-                name_element = WebDriverWait(driver, timeout).until(
-                    EC.presence_of_element_located((By.XPATH, "//h1[@class='product-name']"))
-                )
-                name = 'SMITH ' + name_element.text
-            except (NoSuchElementException, TimeoutException):
-                name = None
-
-            try:
-                price_element = WebDriverWait(driver, timeout).until(
-                    EC.presence_of_element_located((By.XPATH, "//span[@class='js-list-price']"))
-                )
-                price = price_element.text.replace(',', '').replace('$', '')
-            except (NoSuchElementException, TimeoutException):
-                price = None
-
-            try:
-                img_div = WebDriverWait(driver, timeout).until(
-                    EC.presence_of_element_located((By.XPATH, "//div[@class='prod-img']"))
-                )
-                if img_div:
-                    img_element = img_div.find_element(By.TAG_NAME, 'img')
-                    img = img_element.get_attribute('src')
-            except (NoSuchElementException, TimeoutException):
-                img = None
-
-        elif platform_key.lower() == 'a':  # HALFDAYS
-            try:
-                name_element = WebDriverWait(driver, timeout).until(
-                    EC.presence_of_element_located((By.XPATH, "//h1[@role='heading']"))
-                )
-                name = 'Halfdays ' + name_element.text
-            except (NoSuchElementException, TimeoutException):
-                name = None
-
-            try:
-                price_element = WebDriverWait(driver, timeout).until(
-                    EC.presence_of_element_located((By.CSS_SELECTOR, "span.price-item.price-item--regular"))
-                )
-                price = price_element.get_attribute('innerHTML').strip().replace(',', '').replace('$', '')
-            except (NoSuchElementException, TimeoutException):
-                price = None
-
-            try:
-                img_element = WebDriverWait(driver, timeout).until(
-                    EC.presence_of_element_located((By.XPATH, "//img[@class='photoswipe__image']"))
-                )
-                img = img_element.get_attribute('src')
-            except (NoSuchElementException, TimeoutException):
-                img = None
-
-        else: # Invalid platform key
+        else:
             raise ValueError(f"Invalid platform key '{platform_key}'. Ensure platform is supported.")
-        
-        if not price or not img or not name:
-            raise RuntimeError("Failed to extract some or all data from URL. Ensure platform is supported.")
-        
-        info = {
-            'name': name,
-            'price': price,
-            'img': img
-        }
+
+        # Final check to ensure all required fields are present
+        if not all(info.values()):
+            raise RuntimeError("Failed to extract name, price, and image data from URL.")
+
         return info
 
     except WebDriverException:
         raise RuntimeError("The provided URL could not be accessed or is invalid.")
     except Exception as e:
         raise RuntimeError(f"{e}")
-
-
     finally:
         driver.quit()
-        
+
 @app.route('/scrape', methods=['POST'])
 def scrape():
     try:
@@ -162,7 +81,7 @@ def scrape():
         if not url:
             return jsonify({'error': 'URL is required'}), 400
 
-        result = get_info(url)  # Your scraping logic here
+        result = get_info(url)  # Scraping logic
         response = make_response(jsonify(result), 200)
         
         # Add CORS headers
@@ -183,8 +102,3 @@ def scrape():
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
-
-'''if __name__ == "__main__":
-    url = "https://www.halfdays.com/products/johnson-top-peony"  # Hardcoded for testing
-    info = get_info(url)
-    print(info)'''
