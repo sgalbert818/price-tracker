@@ -41,7 +41,7 @@ export default function AddItem() {
         } else {
             setLoading(true)
             try {
-                const response = await fetch('http://18.218.68.142:5000/scrape', {
+                const response = await fetch('https://18.218.68.142:5000/scrape', {
                     method: 'POST', // Specify the request method
                     headers: {
                         "Content-Type": "application/json", // Set the content type to JSON
