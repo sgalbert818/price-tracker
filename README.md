@@ -1,14 +1,12 @@
-# price-tracker: serverless web scraper
-
-# live demo
+# Price-Tracker: Serverless Web Scraper
 
 https://main.dsrqd59wkn2z0.amplifyapp.com/
 
-# overview
+# Overview
 
 This project is a serverless web scraper designed to track product prices from various e-commerce websites. Users can input a URL, and the scraper will retrieve the product information, storing it in a DynamoDB database. Using AWS Lambda, the scraper runs every 24 hours to check for price drops and notifies users accordingly.
 
-# technologies used
+# Technologies Used
 
 Frontend: React
 Backend: Flask (Python)
@@ -18,7 +16,7 @@ Serverless Architecture: AWS Lambda
 Containerization: Docker
 Hosting: AWS EC2
 
-# features
+# Features
 
 User-friendly React frontend for URL submission.
 Efficient web scraping using Selenium in a Flask application.
@@ -26,14 +24,14 @@ Items stored in DynamoDB for easy retrieval and management.
 Scheduled price checks every 24 hours using AWS Lambda.
 Notifications for users when price drops occur.
 
-# prerequisites
+# Prerequisites
 
 Docker
 AWS Account
 Python 3.x
 Node.js and npm
 
-# getting started
+# Getting Started
 
 Clone the repository:
 git clone https://github.com/yourusername/your-repo.git
@@ -51,7 +49,7 @@ docker build -t scraper-backend .
 Run the Docker container:
 docker run -p 5000:5000 scraper-backend
 
-# deployment
+# Deployment
 
 Set up your Flask application on an EC2 instance.
 Create a DynamoDB table to store the product information.
@@ -59,7 +57,7 @@ Create a Lambda function to run the scraper every 24 hours.
 Ensure it has permissions to access DynamoDB and trigger your Flask application.
 Set up an SNS topic or another method to notify users of price drops.
 
-# usage
+# Usage
 
 Open the frontend application in your web browser.
 Enter the URL of the product you want to track and submit.
