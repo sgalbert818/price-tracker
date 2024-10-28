@@ -9,19 +9,29 @@ This project is a serverless web scraper designed to track product prices from v
 # Technologies Used
 
 Frontend: React
+
 Backend: Flask (Python)
+
 Web Scraping: Selenium
+
 Database: AWS DynamoDB
+
 Serverless Architecture: AWS Lambda
+
 Containerization: Docker
+
 Hosting: AWS EC2
 
 # Features
 
 User-friendly React frontend for URL submission.
+
 Efficient web scraping using Selenium in a Flask application.
+
 Items stored in DynamoDB for easy retrieval and management.
+
 Scheduled price checks every 24 hours using AWS Lambda.
+
 Notifications for users when price drops occur.
 
 # Prerequisites
@@ -60,14 +70,21 @@ docker run -p 5000:5000 scraper-backend
 # Deployment
 
 Set up your Flask application on an EC2 instance.
+
 Create a DynamoDB table to store the product information.
+
 Create a Lambda function to run the scraper every 24 hours.
+
 Ensure it has permissions to access DynamoDB and trigger your Flask application.
+
 Set up an SNS topic or another method to notify users of price drops.
 
 # Usage
 
 Open the frontend application in your web browser.
+
 Enter the URL of the product you want to track and submit.
+
 The scraper will retrieve the product information and store it in the database.
+
 Users will be notified of any price drops within 24 hours.
