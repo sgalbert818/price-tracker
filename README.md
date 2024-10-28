@@ -34,20 +34,28 @@ Node.js and npm
 # Getting Started
 
 Clone the repository:
+```bash
 git clone https://github.com/yourusername/your-repo.git
 cd your-repo
+```
 
 Set up the frontend:
 cd frontend
+```bash
 npm install
 npm start
+```
 
 Build the backend Docker image:
+```bash
 cd backend
 docker build -t scraper-backend .
+```
 
 Run the Docker container:
+```bash
 docker run -p 5000:5000 scraper-backend
+```
 
 # Deployment
 
