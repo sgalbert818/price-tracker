@@ -37,8 +37,11 @@ Notifications for users when price drops occur.
 # Prerequisites
 
 Docker
+
 AWS Account
+
 Python 3.x
+
 Node.js and npm
 
 # Getting Started
