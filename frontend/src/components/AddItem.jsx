@@ -104,10 +104,12 @@ export default function AddItem() {
                     name="url"
                     value={formData.url}
                     onChange={handleChange}
+                    disabled={true}
+                    placeholder="Disabled in demo version"
                 />
                 <br></br>
                 <div className="submit">
-                    <button onClick={handleSubmit}>Add Item</button>
+                    <button onClick={handleSubmit} disabled={true}>Add Item</button>
                     {!items && <div>Searching for items...</div>}
                     {items && items.length === 0 && !loading && <div>Add an item to get started!</div>}
                     {loading && <div>Scanning URL...</div>}
